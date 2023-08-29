@@ -12,7 +12,7 @@ Require the same amount as the number of players. If the Dragon Puzzle step is f
 
 ### Trample Steam step:
 #### Maxis Side
-- (Disabled) If the number of players is less than 4, the players will be able to obtain at least 4 trample steams from the equipment table during the Maxis Trample Steams step, but they must place one down before being able to equip the next one. Zombies will ignore your buildables during the step.
+- If the number of players is less than 4, the players will be able to obtain at least 4 trample steams from the equipment table during the Maxis Trample Steams step, but they must place one down before being able to equip the next one. Zombies will ignore your buildables during the step.
 - On solo and on 3p while the 1st ball is already flinging between Trample Steams placed on a set lion symbols, only one Trample Steam will be required in order to be able to place down a ball.
 - If the number of players is 2 or less, the players will have the ability to place both balls on the same set of Trample Steams.
 - On 3p, having the 1st ball flinging is required to be able to place the other ball on the lone Trample Steam.
