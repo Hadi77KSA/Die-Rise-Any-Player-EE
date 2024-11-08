@@ -20,10 +20,17 @@ onPlayerConnect()
 	for (;;)
 	{
 		level waittill( "connected", player );
-		player iPrintLn( "^3Any Player EE Mod ^5Die Rise Extra Trample Steams" );
+		player thread display_mod_message();
 		player thread equipment_placed_listen();
 		player thread onPlayerDisconnect();
 	}
+}
+
+display_mod_message()
+{
+	self endon( "disconnect" );
+	flag_wait( "initial_players_connected" );
+	self iPrintLn( "^3Any Player EE Mod ^5Die Rise Maxis Extra Trample Steams" );
 }
 
 onPlayerDisconnect()
