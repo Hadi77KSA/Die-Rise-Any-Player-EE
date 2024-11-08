@@ -17,10 +17,10 @@ init()
 
 onPlayerConnect()
 {
-	while ( true )
+	for (;;)
 	{
 		level waittill( "connected", player );
-		player iPrintLn( "^3Any Player EE Mod ^5Die Rise" );
+		player iPrintLn( "^3Any Player EE Mod ^5Die Rise Extra Trample Steams" );
 		player thread equipment_placed_listen();
 		player thread onPlayerDisconnect();
 	}
@@ -29,7 +29,6 @@ onPlayerConnect()
 onPlayerDisconnect()
 {
 	level endon( "end_game" );
-
 	self waittill( "disconnect" );
 	level thread refresh_players_springpads();
 }
@@ -37,9 +36,8 @@ onPlayerDisconnect()
 //makes zombies ignore Trample Steams placed during Maxis Trample Steam step if number of players was less than 4 when the Ballistic Knife step was completed
 custom_ignore_springpads_during_pts_2()
 {
-	level endon("end_game");
-	self endon("disconnect");
-
+	level endon( "end_game" );
+	self endon( "disconnect" );
 	flag_wait( "initial_blackscreen_passed" );
 
 	if ( flag( "sq_branch_complete" ) || is_true( level.maxcompleted ) )
@@ -51,7 +49,6 @@ custom_ignore_springpads_during_pts_2()
 		maps\mp\zombies\_zm_equipment::enemies_ignore_equipment( level.springpad_name );
 
 	level waittill( "sq_2_pts_2_over" );
-
 	arrayRemoveValue( level.equipment_ignored_by_zombies, level.springpad_name );
 }
 
@@ -76,23 +73,23 @@ custom_quick_release()
 		return;
 
 	wait 0.05;
-
 	a_spots = getstructarray( "pts_lion", "targetname" );
-
 	n_deployed_springpads_on_symbols = 0;
+
 	foreach ( s_spot in a_spots )
 	{
 		if ( isdefined( s_spot.springpad ) )
 			n_deployed_springpads_on_symbols++;
 	}
 
-	players = getPlayers();
 	n_springpads_in_inventory = 0;
-	foreach ( player in players )
+
+	foreach ( player in getPlayers() )
 	{
 		equipment = player get_player_equipment();
-		if ( isDefined( equipment ) && equipment == level.springpad_name )
-			n_springpads_in_inventory += 1;
+
+		if ( isdefined( equipment ) && equipment == level.springpad_name )
+			n_springpads_in_inventory++;
 	}
 
 	n_total_springpads_ready_for_symbols = n_deployed_springpads_on_symbols + n_springpads_in_inventory;
@@ -109,10 +106,9 @@ refresh_players_springpads()
 		return;
 
 	wait 0.05;
-
 	a_spots = getstructarray( "pts_lion", "targetname" );
-
 	n_deployed_springpads_on_symbols = 0;
+
 	foreach ( s_spot in a_spots )
 	{
 		if ( isdefined( s_spot.springpad ) )
@@ -120,22 +116,24 @@ refresh_players_springpads()
 	}
 
 	n_springpads_in_inventory = 0;
-	players = getPlayers();
-	foreach ( player in players )
+
+	foreach ( player in getPlayers() )
 	{
 		equipment = player get_player_equipment();
-		if ( isDefined( equipment ) && equipment == level.springpad_name )
-			n_springpads_in_inventory += 1;
+
+		if ( isdefined( equipment ) && equipment == level.springpad_name )
+			n_springpads_in_inventory++;
 	}
 
 	n_total_springpads_ready_for_symbols = n_deployed_springpads_on_symbols + n_springpads_in_inventory;
 
-	if ( players.size < 4 && n_total_springpads_ready_for_symbols < 4 )
+	if ( getPlayers().size < 4 && n_total_springpads_ready_for_symbols < 4 )
 	{
-		foreach ( player in players )
+		foreach ( player in getPlayers() )
 		{
 			equipment = player get_player_equipment();
-			if ( !isDefined( equipment ) || equipment != level.springpad_name )
+
+			if ( !isdefined( equipment ) || equipment != level.springpad_name )
 			{
 				if ( n_total_springpads_ready_for_symbols < 4 )
 				{
@@ -187,6 +185,7 @@ custom_pts_springpad_waittill_removed( m_springpad )
 		}
 
 		msg = self waittill_any_return( "death", "disconnect", "equip_springpad_zm_taken", "equip_springpad_zm_pickup" );
+
 		if ( getPlayers().size >= 4 || !is_true( level._zombie_sidequests[ "sq_2" ].stages[ "ssp_2" ].completed ) || ( msg != "equip_springpad_zm_taken" && msg != "equip_springpad_zm_pickup" ) )
 			break;
 	}
